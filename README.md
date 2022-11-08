@@ -13,7 +13,7 @@ aws ecr create-repository --repository-name expapi
 export REP_URI=$(aws ecr describe-repositories |jq '.repositories[] |select(.repositoryName=="expapi") | .repositoryUri' -r)
 aws ecr get-login-password --region eu-west-2 | docker login --username AWS --password-stdin $REURI
 docker tag expapi:0.0.1 $REP_URI
-docker push $REP_URI
+docker image push $REP_URI
 sed -i 's+%REP_URI%+'$REP_URI'+g' sample-deployment.yaml
 ```
 
