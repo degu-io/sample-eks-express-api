@@ -14,13 +14,13 @@ export REP_URI=$(aws ecr describe-repositories |jq '.repositories[] |select(.rep
 aws ecr get-login-password --region eu-west-2 | docker login --username AWS --password-stdin $REURI
 docker tag expapi:0.0.1 $REP_URI
 docker image push $REP_URI
-sed -i 's+%REP_URI%+'$REP_URI'+g' sample-deployment.yaml
 ```
 
 ### Update `sample-deployment.yaml`
 ```bash
 sed -i 's+%REP_URI%+'$REP_URI'+g' sample-deployment.yaml
 ```
+Or just update the image with the contents of `$REP_URI`
 
 ### Create EKS Cluster and service
 ```bash
